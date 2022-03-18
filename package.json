@@ -1,6 +1,6 @@
 {
     "name": "@easy_it/cordova-res-generator",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Generates icon & splash screen for cordova/ionic projects using javascript only.",
     "main": "index.js",
     "preferGlobal": true,
@@ -47,7 +47,7 @@
     "contributors": [
         {
             "name": "easy-linux",
-            "email": "its.easy.it@gmail.com"
+            "email": "its.easy.linux@gmail.com"
         }
     ]
 }

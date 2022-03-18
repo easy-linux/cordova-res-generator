@@ -397,7 +397,7 @@ program
     .option('-o, --outputdir [optional]', 'optional output directory (default: ./resources/)')
     .option('-I, --makeicon [optional]', 'option to process icon files only')
     .option('-S, --makesplash [optional]', 'option to process splash files only')
-    .option('-C, --makeconfig [optional]', 'option to generate icon/splash options for config')
+    .option('-C, --makeconfig [optional]', 'option to generate icon/splash definitions for config.xml')
     .parse(process.argv);
 
 // app settings and default values
