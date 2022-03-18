@@ -1,4 +1,4 @@
-# cordova-res-generator
+# @easy_it/cordova-res-generator
 
 ## Introduction
 
@@ -12,7 +12,7 @@ It does **NOT require** any external binary libraries. **Javascript only**.
 
 ## Installation
 
-    $ npm install cordova-res-generator -g
+    $ npm install @easy_it/cordova-res-generator -g
 
 ---
 
@@ -46,6 +46,7 @@ or
                                 (default: ./resources/)
     -I, --makeicon [optional]   option to process icon files only
     -S, --makesplash [optional] option to process splash files only
+    -C, --makeconfig [optional] option to generate icon/splash definitions for config.xml
     -h, --help                  output usage information
 
 ---

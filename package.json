@@ -1,6 +1,6 @@
 {
-    "name": "cordova-res-generator",
-    "version": "0.4.2",
+    "name": "@easy_it/cordova-res-generator",
+    "version": "0.0.1",
     "description": "Generates icon & splash screen for cordova/ionic projects using javascript only.",
     "main": "index.js",
     "preferGlobal": true,
@@ -13,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/olivab/cordova-res-generator.git"
+        "url": "git://github.com/easy-linux/cordova-res-generator.git"
     },
     "keywords": [
         "cordova",
@@ -32,9 +32,9 @@
     },
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/olivab/cordova-res-generator/issues"
+        "url": "https://github.com/easy-linux/cordova-res-generator/issues"
     },
-    "homepage": "https://github.com/olivab/cordova-res-generator",
+    "homepage": "https://github.com/easy-linux/cordova-res-generator",
     "dependencies": {
         "bluebird": "^3.5.1",
         "colors": "^1.1.2",
@@ -46,8 +46,8 @@
     },
     "contributors": [
         {
-            "name": "Olivab",
-            "email": "olivabdev@gmail.com"
+            "name": "easy-linux",
+            "email": "its.easy.it@gmail.com"
         }
     ]
 }

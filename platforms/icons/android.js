@@ -26,7 +26,8 @@ module.exports = {
         {
             name: 'drawable-xxhdpi-icon.png',
             size: 144,
-            comment: 'xxhdpi'
+            comment: 'xxhdpi',
+
         },
         {
             name: 'drawable-xxxhdpi-icon.png',
@@ -36,37 +37,37 @@ module.exports = {
         {
             name: 'drawable-playstore-512-icon.png',
             size: 512,
-            comment: 'Google Play Store'
+            comment: ''
         },
         {
             name: 'mipmap-hdpi/ic_launcher.png',
             size: 72,
-            comment: ''
+            comment: 'hdpi'
         },
         {
             name: 'mipmap-ldpi/ic_launcher.png',
             size: 36,
-            comment: ''
+            comment: 'ldpi'
         },
         {
             name: 'mipmap-mdpi/ic_launcher.png',
             size: 48,
-            comment: ''
+            comment: 'mdpi'
         },
         {
             name: 'mipmap-xhdpi/ic_launcher.png',
             size: 96,
-            comment: ''
+            comment: 'xhdpi'
         },
         {
             name: 'mipmap-xxhdpi/ic_launcher.png',
             size: 144,
-            comment: ''
+            comment: 'xxhdpi'
         },
         {
             name: 'mipmap-xxxhdpi/ic_launcher.png',
             size: 192,
-            comment: ''
+            comment: 'xxxhdpi'
         }
     ]
 };

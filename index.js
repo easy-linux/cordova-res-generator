@@ -51,6 +51,7 @@ const PLATFORMS = {
 };
 var g_imageObjects;
 var g_selectedPlatforms = [];
+var configGenerated = {};
 
 // app functions
 
@@ -187,6 +188,7 @@ function checkOutPutDir(settings) {
 }
 
 function generateForConfig(imageObj, settings, config) {
+    console.log(config)
     var platformPath = path.join(settings.outputdirectory, config.path);
 
     var transformIcon = (definition) => {
@@ -268,6 +270,50 @@ function generateForConfig(imageObj, settings, config) {
         });
 }
 
+function doGenerate(imageObj, settings, config) {
+    //console.log(config)
+    return new Promise((resolve, reject) => {
+        var platformPath = path.join(settings.outputdirectory, config.path);
+        if(!configGenerated[config.platform]){
+            configGenerated[config.platform] = {}
+        }
+        if(!configGenerated[config.platform][config.type]){
+            configGenerated[config.platform][config.type] = []
+        }
+        config.definitions.forEach(image => {
+            if(config.platform === 'ios'){
+                if(config.type === 'icon'){
+                    configGenerated[config.platform][config.type].push(`<icon src="${platformPath}/${image.name}" width="${image.size}" height="${image.size}" />`)
+                } else {
+                    configGenerated[config.platform][config.type].push(`<splash src="${platformPath}/${image.name}" />`)
+                }
+            } else if(config.platform === 'android'){
+                if(config.type === 'icon'){
+                    configGenerated[config.platform][config.type].push(`<icon src="${platformPath}/${image.name}" density="${image.comment}" />`)
+                } else {
+                    configGenerated[config.platform][config.type].push(`<splash src="${platformPath}/${image.name}" density="${image.comment}" />`)
+                }
+            } else if(config.platform === 'windows'){
+                if(config.type === 'icon'){
+                    
+                    configGenerated[config.platform][config.type].push(`<icon src="${platformPath}/${image.name}" width="${image.size}" height="${image.size}" />`)
+                } else {
+                    configGenerated[config.platform][config.type].push(`<splash src="${platformPath}/${image.name}" width="${image.size}" height="${image.size}" />`)
+                }
+            } else if(config.platform === 'blackberry10'){
+                if(config.type === 'icon'){
+                    
+                    configGenerated[config.platform][config.type].push(`<icon src="${platformPath}/${image.name}" width="${image.size}" height="${image.size}" />`)
+                } else {
+                    configGenerated[config.platform][config.type].push(`<splash src="${platformPath}/${image.name}" width="${image.size}" height="${image.size}" />`)
+                }
+            }
+        })
+        resolve()
+    })
+    
+}
+
 function generate(imageObj, settings) {
 
     display.header('Generating files');
@@ -284,11 +330,47 @@ function generate(imageObj, settings) {
         return false;
     });
 
+    
+
     return Q.mapSeries(filteredConfigs, (config) => {
             return generateForConfig(imageObj, settings, config);
         })
         .then(() => {
             //display.success("Successfully generated all files");
+        });
+
+}
+
+function generateStringsForConfig(imageObj, settings) {
+
+    display.header('Generating strings for config,xml');
+
+    var configs = [];
+    configGenerated = {}
+
+    g_selectedPlatforms.forEach((platform) => {
+        PLATFORMS[platform].definitions.forEach((def) => configs.push(require(def)));
+    });
+
+    var filteredConfigs = _.filter(configs, (config) => {
+        if (config.type === 'icon' && settings.makeicon) return true;
+        if (config.type === 'splash' && settings.makesplash) return true;
+        return false;
+    });
+    
+
+    return Q.mapSeries(filteredConfigs, (config) => {
+            return doGenerate(imageObj, settings, config);
+        })
+        .then(() => {
+            Object.keys(configGenerated).forEach(platform => {
+                console.log(`<platform name="${platform}"> \n`)
+
+                Object.keys(configGenerated[platform]).forEach(type => {
+                    configGenerated[platform][type].forEach(line => console.log(line))
+                })
+                console.log(`</platform> \n\n`)
+            })
         });
 
 }
@@ -305,6 +387,7 @@ function processList(val) {
 }
 
 var pjson = require('./package.json');
+const { config } = require('bluebird');
 program
     .version(pjson.version)
     .description(pjson.description)
@@ -314,6 +397,7 @@ program
     .option('-o, --outputdir [optional]', 'optional output directory (default: ./resources/)')
     .option('-I, --makeicon [optional]', 'option to process icon files only')
     .option('-S, --makesplash [optional]', 'option to process splash files only')
+    .option('-C, --makeconfig [optional]', 'option to generate icon/splash options for config')
     .parse(process.argv);
 
 // app settings and default values
@@ -324,7 +408,8 @@ var g_settings = {
     platforms: program.platforms || undefined,
     outputdirectory: program.outputdir || path.join('.', 'resources'),
     makeicon: program.makeicon || (!program.makeicon && !program.makesplash) ? true : false,
-    makesplash: program.makesplash || (!program.makeicon && !program.makesplash) ? true : false
+    makesplash: program.makesplash || (!program.makeicon && !program.makesplash) ? true : false,
+    makeconfig: program.makeconfig || false
 };
 
 // app entry point
@@ -332,6 +417,13 @@ var g_settings = {
 console.log("***************************");
 console.log("cordova-res-generator " + pjson.version);
 console.log("***************************");
+
+if(program.makeconfig){
+    check(g_settings)
+    .then(()=>generateStringsForConfig(g_imageObjects, g_settings))
+    .catch((err) => catchErrors(err));
+    return ;
+}
 
 check(g_settings)
     .then(() => generate(g_imageObjects, g_settings))

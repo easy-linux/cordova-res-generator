@@ -100,6 +100,16 @@ module.exports = {
             name: 'icon-small@3x.png',
             size: 87,
             comment: 'iPhone Spotlight and Settings Icon'
+        },
+        {
+            name: 'icon-1024.png',
+            size: 1024,
+            comment: 'iTunes icon'
+        },
+        {
+            name: 'icon-167.png',
+            size: 167,
+            comment: 'iPad pro'
         }
     ]
 };
